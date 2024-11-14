@@ -24,6 +24,7 @@ export const wranglerActionConfig = z.object({
 	workingDirectory: z.string(),
 	CLOUDFLARE_API_TOKEN: z.string(),
 	CLOUDFLARE_ACCOUNT_ID: z.string(),
+	NAME: z.string(),
 	ENVIRONMENT: z.string(),
 	VARS: z.array(z.string()),
 	COMMANDS: z.array(z.string()),
@@ -268,6 +269,7 @@ async function uploadSecrets(
 	const secrets: string[] = config["secrets"];
 	const environment = config["ENVIRONMENT"];
 	const workingDirectory = config["workingDirectory"];
+	const workerName = config["NAME"];
 
 	if (!secrets.length) {
 		return;
@@ -286,10 +288,14 @@ async function uploadSecrets(
 			);
 		}
 
-		const args = ["wrangler", "secret:bulk"];
+		const args = ["wrangler", "secret", "bulk"];
 
 		if (environment) {
 			args.push("--env", environment);
+		}
+
+		if (workerName) {
+			args.push("--name", workerName);
 		}
 
 		await exec(packageManager.exec, args, {

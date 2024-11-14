@@ -17,6 +17,7 @@ const config: WranglerActionConfig = {
 	workingDirectory: checkWorkingDirectory(getInput("workingDirectory")),
 	CLOUDFLARE_API_TOKEN: getInput("apiToken"),
 	CLOUDFLARE_ACCOUNT_ID: getInput("accountId"),
+	NAME: getInput("name"),
 	ENVIRONMENT: getInput("environment"),
 	VARS: getMultilineInput("vars"),
 	COMMANDS: getMultilineInput("command"),
